@@ -75,7 +75,12 @@ class PV_Events {
 		 * Refer To http://codex.wordpress.org/Plugin_API#Hooks.2C_Actions_and_Filters
 		 */
 		add_action( 'init', array( $this, 'action_init' ) );
+//		add_action( 'plugins_loaded', array( $this, 'action_plugins_loaded' ) );
 		add_filter( '@TODO', array( $this, 'filter_method_name' ) );
+
+
+		if ( ! defined( 'ACF_LITE' ) ) define( 'ACF_LITE', true );
+		include dirname( dirname(__FILE__) ) . '/vendor/advanced-custom-fields/acf.php';
 
 	}
 
@@ -285,6 +290,39 @@ class PV_Events {
 	 * @since    1.0.0
 	 */
 	public function action_init() {
+		$this->post_types();
+		$this->taxonomies();	
+	}
+
+	/**
+	 * Use the plugins_loaded hook to load all the dependencies
+	 */
+	public function action_plugins_loaded() {
+
+		if ( ! defined( 'ACF_LITE' ) ) define( 'ACF_LITE', true );
+
+		include dirname( dirname(__FILE__) ) . '/vendor/advanced-custom-fields/acf.php';
+		// require_once( dirname( dirname(__FILE__) ) . '/vendor/acf-options-page/acf-options-page.php' );
+		// require_once( dirname( dirname(__FILE__) ) . '/vendor/acf-repeater/acf-repeater.php' );
+	}
+
+	/**
+	 * NOTE:  Filters are points of execution in which WordPress modifies data
+	 *        before saving it or sending it to the browser.
+	 *
+	 *        Filters: http://codex.wordpress.org/Plugin_API#Filters
+	 *        Reference:  http://codex.wordpress.org/Plugin_API/Filter_Reference
+	 *
+	 * @since    1.0.0
+	 */
+	public function filter_method_name() {
+		// @TODO: Define your filter hook callback here
+	}
+
+	/**
+	 * Register the custom post types used for the plugin
+	 */
+	private function post_types() {
 		// Register custom post-types
 		$presentation_labels = array(
 			'name'                => __( 'Live Presentations', 'pv-events' ),
@@ -328,8 +366,6 @@ class PV_Events {
 		);
 	
 		register_post_type( 'presentations', $presentation_args );
-
-
 		$topic_labels = array(
 			'name'                => __( 'Topic Areas', 'pv-events' ),
 			'singular_name'       => __( 'Topic Area', 'pv-events' ),
@@ -393,7 +429,7 @@ class PV_Events {
 			'labels'              => $resource_labels,
 			'hierarchical'        => false,
 			'description'         => 'Resources from the event',
-			'taxonomies'          => array(),
+			'taxonomies'          => array( 'type', 'release' ),
 			'public'              => true,
 			'show_ui'             => true,
 			'show_in_menu'        => true,
@@ -416,20 +452,79 @@ class PV_Events {
 		);
 	
 		register_post_type( 'library', $resource_args );
-		
+
 	}
 
 	/**
-	 * NOTE:  Filters are points of execution in which WordPress modifies data
-	 *        before saving it or sending it to the browser.
-	 *
-	 *        Filters: http://codex.wordpress.org/Plugin_API#Filters
-	 *        Reference:  http://codex.wordpress.org/Plugin_API/Filter_Reference
-	 *
-	 * @since    1.0.0
+	 * Register the custom taxonomies used for the plugin
 	 */
-	public function filter_method_name() {
-		// @TODO: Define your filter hook callback here
+	private function taxonomies() {
+		
+		$type_labels = array(
+			'name'					=> _x( 'Resource Types', 'Taxonomy plural name', 'pv-events' ),
+			'singular_name'			=> _x( 'Resource Type', 'Taxonomy singular name', 'pv-events' ),
+			'search_items'			=> __( 'Search Resource Types', 'pv-events' ),
+			'popular_items'			=> __( 'Popular Resource Types', 'pv-events' ),
+			'all_items'				=> __( 'All Resource Types', 'pv-events' ),
+			'parent_item'			=> __( 'Parent Type', 'pv-events' ),
+			'parent_item_colon'		=> __( 'Parent Type:', 'pv-events' ),
+			'edit_item'				=> __( 'Edit Resource Type', 'pv-events' ),
+			'update_item'			=> __( 'Update Resource Type', 'pv-events' ),
+			'add_new_item'			=> __( 'Add New Resource Type', 'pv-events' ),
+			'new_item_name'			=> __( 'New Resource Type Name', 'pv-events' ),
+			'add_or_remove_items'	=> __( 'Add or remove Resource Types', 'pv-events' ),
+			'choose_from_most_used'	=> __( 'Choose from most used types', 'pv-events' ),
+			'menu_name'				=> __( 'Resource Types', 'pv-events' ),
+		);
+	
+		$type_args = array(
+			'labels'            => $type_labels,
+			'public'            => true,
+			'show_in_nav_menus' => true,
+			'show_admin_column' => false,
+			'hierarchical'      => true,
+			'show_tagcloud'     => true,
+			'show_ui'           => true,
+			'query_var'         => true,
+			'rewrite'           => true,
+			'query_var'         => true,
+		);
+	
+		register_taxonomy( 'type', array( 'library' ), $type_args );		
+
+
+		$release_labels = array(
+			'name'					=> _x( 'Releases', 'Taxonomy plural name', 'pv-events' ),
+			'singular_name'			=> _x( 'Release', 'Taxonomy singular name', 'pv-events' ),
+			'search_items'			=> __( 'Search Releases', 'pv-events' ),
+			'popular_items'			=> __( 'Popular Releases', 'pv-events' ),
+			'all_items'				=> __( 'All Releases', 'pv-events' ),
+			'parent_item'			=> __( 'Parent Release', 'pv-events' ),
+			'parent_item_colon'		=> __( 'Parent Release:', 'pv-events' ),
+			'edit_item'				=> __( 'Edit Release', 'pv-events' ),
+			'update_item'			=> __( 'Update Release', 'pv-events' ),
+			'add_new_item'			=> __( 'Add New Release', 'pv-events' ),
+			'new_item_name'			=> __( 'New Release Name', 'pv-events' ),
+			'add_or_remove_items'	=> __( 'Add or remove Release', 'pv-events' ),
+			'choose_from_most_used'	=> __( 'Choose from most used releases', 'pv-events' ),
+			'menu_name'				=> __( 'Releases', 'pv-events' ),
+		);
+	
+		$release_args = array(
+			'labels'            => $release_labels,
+			'public'            => true,
+			'show_in_nav_menus' => true,
+			'show_admin_column' => false,
+			'hierarchical'      => true,
+			'show_tagcloud'     => true,
+			'show_ui'           => true,
+			'query_var'         => true,
+			'rewrite'           => true,
+			'query_var'         => true,
+		);
+	
+		register_taxonomy( 'release', array( 'library' ), $release_args );	
+		
 	}
 
 }
