@@ -68,7 +68,7 @@ class PV_Events_Admin {
 		 * Read more about actions and filters:
 		 * http://codex.wordpress.org/Plugin_API#Hooks.2C_Actions_and_Filters
 		 */
-		add_action( '@TODO', array( $this, 'action_method_name' ) );
+		add_action( 'init', array( $this, 'action_init' ) );
 		add_filter( '@TODO', array( $this, 'filter_method_name' ) );
 
 	}
@@ -187,8 +187,8 @@ class PV_Events_Admin {
 	 *
 	 * @since    1.0.0
 	 */
-	public function action_method_name() {
-		// @TODO: Define your action hook callback here
+	public function action_init() {
+		$this->custom_fields();
 	}
 
 	/**
@@ -204,4 +204,146 @@ class PV_Events_Admin {
 		// @TODO: Define your filter hook callback here
 	}
 
+	/**
+	 * Register the custom fields for the plugin with ACF
+	 */
+	private function custom_fields() {
+		if( ! function_exists("register_field_group") ) wp_die(file_get_contents( dirname( dirname(__FILE__) ) . '/vendor/advanced-custom-fields/acf.php'));
+		register_field_group(array (
+			'id' => 'pv_event_resource',
+			'title' => 'Resource',
+			'fields' => array (
+				array (
+					'key' => 'pv_event_field_53750a5d69efc',
+					'label' => 'Type',
+					'name' => 'pv_event_resource_type',
+					'type' => 'radio',
+					'required' => 1,
+					'choices' => array (
+						'video' => 'Video',
+						'pdf' => 'PDF',
+						'link' => 'Link',
+						'slideshare' => 'Slideshare',
+					),
+					'other_choice' => 0,
+					'save_other_choice' => 0,
+					'default_value' => '',
+					'layout' => 'horizontal',
+				),
+				array (
+					'key' => 'pv_event_field_53750ab669efd',
+					'label' => 'Video Code',
+					'name' => 'pv_event_resource_video_code',
+					'type' => 'textarea',
+					'conditional_logic' => array (
+						'status' => 1,
+						'rules' => array (
+							array (
+								'field' => 'pv_event_field_53750a5d69efc',
+								'operator' => '==',
+								'value' => 'video',
+							),
+						),
+						'allorany' => 'all',
+					),
+					'default_value' => '',
+					'placeholder' => '',
+					'maxlength' => '',
+					'rows' => '',
+					'formatting' => 'html',
+				),
+				array (
+					'key' => 'pv_event_field_53750ae569efe',
+					'label' => 'File',
+					'name' => 'pv_event_resource_file',
+					'type' => 'file',
+					'conditional_logic' => array (
+						'status' => 1,
+						'rules' => array (
+							array (
+								'field' => 'pv_event_field_53750a5d69efc',
+								'operator' => '==',
+								'value' => 'pdf',
+							),
+						),
+						'allorany' => 'all',
+					),
+					'save_format' => 'object',
+					'library' => 'all',
+				),
+				array (
+					'key' => 'pv_event_field_53750b0569eff',
+					'label' => 'URL',
+					'name' => 'pv_event_resource_url',
+					'type' => 'text',
+					'conditional_logic' => array (
+						'status' => 1,
+						'rules' => array (
+							array (
+								'field' => 'pv_event_field_53750a5d69efc',
+								'operator' => '==',
+								'value' => 'link',
+							),
+							array (
+								'field' => 'pv_event_field_53750a5d69efc',
+								'operator' => '==',
+								'value' => 'slideshare',
+							),
+						),
+						'allorany' => 'any',
+					),
+					'default_value' => '',
+					'placeholder' => '',
+					'prepend' => '',
+					'append' => '',
+					'formatting' => 'none',
+					'maxlength' => '',
+				),
+				array (
+					'key' => 'pv_event_field_5375145e4ae02',
+					'label' => 'Resource Type',
+					'name' => 'pv_event_resource_type',
+					'type' => 'taxonomy',
+					'required' => 1,
+					'taxonomy' => 'type',
+					'field_type' => 'select',
+					'allow_null' => 0,
+					'load_save_terms' => 1,
+					'return_format' => 'id',
+					'multiple' => 0,
+				),
+				array (
+					'key' => 'pv_event_field_537514974ae03',
+					'label' => 'Releases',
+					'name' => 'pv_event_resource_releases',
+					'type' => 'taxonomy',
+					'taxonomy' => 'release',
+					'field_type' => 'multi_select',
+					'allow_null' => 0,
+					'load_save_terms' => 1,
+					'return_format' => 'id',
+					'multiple' => 1,
+				),
+			),
+			'location' => array (
+				array (
+					array (
+						'param' => 'post_type',
+						'operator' => '==',
+						'value' => 'library',
+						'order_no' => 0,
+						'group_no' => 0,
+					),
+				),
+			),
+			'options' => array (
+				'position' => 'acf_after_title',
+				'layout' => 'default',
+				'hide_on_screen' => array (
+				),
+			),
+			'menu_order' => 0,
+		));
+
+	}
 }
