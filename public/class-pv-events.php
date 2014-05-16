@@ -75,10 +75,9 @@ class PV_Events {
 		 * Refer To http://codex.wordpress.org/Plugin_API#Hooks.2C_Actions_and_Filters
 		 */
 		add_action( 'init', array( $this, 'action_init' ) );
-//		add_action( 'plugins_loaded', array( $this, 'action_plugins_loaded' ) );
 		add_filter( '@TODO', array( $this, 'filter_method_name' ) );
 
-
+		$this->custom_fields_libraries();
 		if ( ! defined( 'ACF_LITE' ) ) define( 'ACF_LITE', true );
 		include dirname( dirname(__FILE__) ) . '/vendor/advanced-custom-fields/acf.php';
 
@@ -359,13 +358,14 @@ class PV_Events {
 			'rewrite'             => true,
 			'capability_type'     => 'post',
 			'supports'            => array(
-				'title', 'editor', 'author', 'thumbnail',
-				'excerpt','custom-fields', 'trackbacks', 'comments',
-				'revisions'
-				)
+				'title', 'editor', 'thumbnail',
+				'excerpt', 'comments', 'revisions'
+			)
 		);
 	
 		register_post_type( 'presentations', $presentation_args );
+
+
 		$topic_labels = array(
 			'name'                => __( 'Topic Areas', 'pv-events' ),
 			'singular_name'       => __( 'Topic Area', 'pv-events' ),
@@ -401,10 +401,9 @@ class PV_Events {
 			'rewrite'             => true,
 			'capability_type'     => 'post',
 			'supports'            => array(
-				'title', 'editor', 'author', 'thumbnail',
-				'excerpt','custom-fields',
-				'revisions'
-				)
+				'title', 'editor', 'thumbnail',
+				'excerpt','revisions'
+			)
 		);
 	
 		register_post_type( 'topics', $topic_args );
@@ -446,9 +445,8 @@ class PV_Events {
 			'capability_type'     => 'post',
 			'supports'            => array(
 				'title', 'editor', 'thumbnail',
-				'excerpt','custom-fields',
-				'revisions'
-				)
+				'excerpt','revisions'
+			)
 		);
 	
 		register_post_type( 'library', $resource_args );
@@ -525,6 +523,14 @@ class PV_Events {
 	
 		register_taxonomy( 'release', array( 'library' ), $release_args );	
 		
+	}
+
+	private function custom_fields_libraries() {
+		if ( ! defined( 'ACF_LITE' ) ) define( 'ACF_LITE', true );
+		include dirname( dirname(__FILE__) ) . '/vendor/advanced-custom-fields/acf.php';
+		include dirname( dirname(__FILE__) ) . '/vendor/acf-repeater/acf-repeater.php';
+		include dirname( dirname(__FILE__) ) . '/vendor/acf-field-date-time-picker/acf-date_time_picker.php';
+		include dirname( dirname(__FILE__) ) . '/vendor/acf-options-page/acf-options-page.php';
 	}
 
 }
