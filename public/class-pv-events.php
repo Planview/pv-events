@@ -532,6 +532,7 @@ class PV_Events {
 		include dirname( dirname(__FILE__) ) . '/vendor/acf-repeater/acf-repeater.php';
 		include dirname( dirname(__FILE__) ) . '/vendor/acf-field-date-time-picker/acf-date_time_picker.php';
 		include dirname( dirname(__FILE__) ) . '/vendor/acf-options-page/acf-options-page.php';
+		include dirname( dirname(__FILE__) ) . '/vendor/acf-gravity-forms/acf-gravity_forms.php';
 	}
 
 
@@ -545,9 +546,9 @@ class PV_Events {
 			'title' => 'Resource',
 			'fields' => array (
 				array (
-					'key' => 'pv_event_field_53750a5d69efc',
+					'key' => 'field_53750a5d69efc',
 					'label' => 'Type',
-					'name' => 'pv_event_resource_type',
+					'name' => 'pv_event_resource_doc_type',
 					'type' => 'radio',
 					'required' => 1,
 					'choices' => array (
@@ -562,7 +563,7 @@ class PV_Events {
 					'layout' => 'horizontal',
 				),
 				array (
-					'key' => 'pv_event_field_53750ab669efd',
+					'key' => 'field_53750ab669efd',
 					'label' => 'Video Code',
 					'name' => 'pv_event_resource_video_code',
 					'type' => 'textarea',
@@ -570,7 +571,7 @@ class PV_Events {
 						'status' => 1,
 						'rules' => array (
 							array (
-								'field' => 'pv_event_field_53750a5d69efc',
+								'field' => 'field_53750a5d69efc',
 								'operator' => '==',
 								'value' => 'video',
 							),
@@ -584,7 +585,7 @@ class PV_Events {
 					'formatting' => 'html',
 				),
 				array (
-					'key' => 'pv_event_field_53750ae569efe',
+					'key' => 'field_53750ae569efe',
 					'label' => 'File',
 					'name' => 'pv_event_resource_file',
 					'type' => 'file',
@@ -592,7 +593,7 @@ class PV_Events {
 						'status' => 1,
 						'rules' => array (
 							array (
-								'field' => 'pv_event_field_53750a5d69efc',
+								'field' => 'field_53750a5d69efc',
 								'operator' => '==',
 								'value' => 'pdf',
 							),
@@ -603,7 +604,7 @@ class PV_Events {
 					'library' => 'all',
 				),
 				array (
-					'key' => 'pv_event_field_53750b0569eff',
+					'key' => 'field_53750b0569eff',
 					'label' => 'URL',
 					'name' => 'pv_event_resource_url',
 					'type' => 'text',
@@ -611,12 +612,12 @@ class PV_Events {
 						'status' => 1,
 						'rules' => array (
 							array (
-								'field' => 'pv_event_field_53750a5d69efc',
+								'field' => 'field_53750a5d69efc',
 								'operator' => '==',
 								'value' => 'link',
 							),
 							array (
-								'field' => 'pv_event_field_53750a5d69efc',
+								'field' => 'field_53750a5d69efc',
 								'operator' => '==',
 								'value' => 'slideshare',
 							),
@@ -631,7 +632,7 @@ class PV_Events {
 					'maxlength' => '',
 				),
 				array (
-					'key' => 'pv_event_field_5375145e4ae02',
+					'key' => 'field_5375145e4ae02',
 					'label' => 'Resource Type',
 					'name' => 'pv_event_resource_type',
 					'type' => 'taxonomy',
@@ -644,7 +645,7 @@ class PV_Events {
 					'multiple' => 0,
 				),
 				array (
-					'key' => 'pv_event_field_537514974ae03',
+					'key' => 'field_537514974ae03',
 					'label' => 'Releases',
 					'name' => 'pv_event_resource_release',
 					'type' => 'taxonomy',
@@ -683,7 +684,7 @@ class PV_Events {
 			'title' => 'Featured Presentation',
 			'fields' => array (
 				array (
-					'key' => 'pv_event_field_537633309a4a6',
+					'key' => 'field_537633309a4a6',
 					'label' => 'Video Code',
 					'name' => 'pv_event_presentation_video',
 					'type' => 'textarea',
@@ -694,7 +695,7 @@ class PV_Events {
 					'formatting' => 'html',
 				),
 				array (
-					'key' => 'pv_event_field_537633709a4a7',
+					'key' => 'field_537633709a4a7',
 					'label' => 'Abstract',
 					'name' => 'pv_event_presentation_abstract',
 					'type' => 'wysiwyg',
@@ -703,7 +704,7 @@ class PV_Events {
 					'media_upload' => 'yes',
 				),
 				array (
-					'key' => 'pv_event_field_537635a69a4a8',
+					'key' => 'field_537635a69a4a8',
 					'label' => 'Start Date / Time',
 					'name' => 'pv_event_presentation_start_time',
 					'type' => 'date_time_picker',
@@ -716,7 +717,7 @@ class PV_Events {
 					'get_as_timestamp' => 'true',
 				),
 				array (
-					'key' => 'pv_event_field_537639879a4a9',
+					'key' => 'field_537639879a4a9',
 					'label' => 'End Date / Time',
 					'name' => 'pv_event_presentation_end_time',
 					'type' => 'date_time_picker',
@@ -727,6 +728,14 @@ class PV_Events {
 					'picker' => 'slider',
 					'save_as_timestamp' => 'true',
 					'get_as_timestamp' => 'true',
+				),
+				array (
+					'key' => 'field_537e4c5e6c26e',
+					'label' => 'Q&A Form',
+					'name' => 'pv_event_presentation_qa_form',
+					'type' => 'gravity_forms_field',
+					'allow_null' => 1,
+					'multiple' => 0,
 				),
 			),
 			'location' => array (
@@ -754,13 +763,13 @@ class PV_Events {
 			'title' => 'Speakers / Representatives Info',
 			'fields' => array (
 				array (
-					'key' => 'pv_event_field_5376418699d41',
+					'key' => 'field_5376418699d41',
 					'label' => 'Speakers / Representatives Info',
 					'name' => 'pv_event_speakers',
 					'type' => 'repeater',
 					'sub_fields' => array (
 						array (
-							'key' => 'pv_event_field_5376437f99d43',
+							'key' => 'field_5376437f99d43',
 							'label' => 'Name',
 							'name' => 'name',
 							'type' => 'text',
@@ -774,7 +783,7 @@ class PV_Events {
 							'maxlength' => '',
 						),
 						array (
-							'key' => 'pv_event_field_5376448499d49',
+							'key' => 'field_5376448499d49',
 							'label' => 'Photo',
 							'name' => 'photo',
 							'type' => 'image',
@@ -784,7 +793,7 @@ class PV_Events {
 							'library' => 'all',
 						),
 						array (
-							'key' => 'pv_event_field_5376439499d44',
+							'key' => 'field_5376439499d44',
 							'label' => 'Title',
 							'name' => 'title',
 							'type' => 'text',
@@ -797,7 +806,7 @@ class PV_Events {
 							'maxlength' => '',
 						),
 						array (
-							'key' => 'pv_event_field_537643aa99d45',
+							'key' => 'field_537643aa99d45',
 							'label' => 'Tagline',
 							'name' => 'tagline',
 							'type' => 'text',
@@ -811,7 +820,7 @@ class PV_Events {
 							'maxlength' => '',
 						),
 						array (
-							'key' => 'pv_event_field_5376443599d46',
+							'key' => 'field_5376443599d46',
 							'label' => 'Twitter',
 							'name' => 'twitter',
 							'type' => 'text',
@@ -824,7 +833,7 @@ class PV_Events {
 							'maxlength' => '',
 						),
 						array (
-							'key' => 'pv_event_field_5376445199d47',
+							'key' => 'field_5376445199d47',
 							'label' => 'Email',
 							'name' => 'email',
 							'type' => 'email',
@@ -835,7 +844,7 @@ class PV_Events {
 							'append' => '',
 						),
 						array (
-							'key' => 'pv_event_field_5376447399d48',
+							'key' => 'field_5376447399d48',
 							'label' => 'Bio',
 							'name' => 'bio',
 							'type' => 'wysiwyg',
@@ -885,13 +894,13 @@ class PV_Events {
 			'title' => 'Topic Area Info',
 			'fields' => array (
 				array (
-					'key' => 'pv_event_field_53765d7d199bb',
+					'key' => 'field_53765d7d199bb',
 					'label' => 'General',
 					'name' => '',
 					'type' => 'tab',
 				),
 				array (
-					'key' => 'pv_event_field_53765c29199b4',
+					'key' => 'field_53765c29199b4',
 					'label' => 'Video Playlist Code',
 					'name' => 'pv_event_topic_playlist',
 					'type' => 'textarea',
@@ -902,11 +911,11 @@ class PV_Events {
 					'formatting' => 'html',
 				),
 				array (
-					'key' => 'pv_event_field_53765c4a199b5',
-					'label' => 'Chat URL',
+					'key' => 'field_53765c4a199b5',
+					'label' => 'Chat Shortcode',
 					'name' => 'pv_event_topic_chat',
 					'type' => 'text',
-					'default_value' => '',
+					'default_value' => '[chat]',
 					'placeholder' => '',
 					'prepend' => '',
 					'append' => '',
@@ -914,13 +923,13 @@ class PV_Events {
 					'maxlength' => '',
 				),
 				array (
-					'key' => 'pv_event_field_53765d5a199ba',
+					'key' => 'field_53765d5a199ba',
 					'label' => 'Sponsor Info',
 					'name' => '',
 					'type' => 'tab',
 				),
 				array (
-					'key' => 'pv_event_field_53765c70199b6',
+					'key' => 'field_53765c70199b6',
 					'label' => 'Sponsor Name',
 					'name' => 'pv_event_topic_sponsor_name',
 					'type' => 'text',
@@ -932,7 +941,7 @@ class PV_Events {
 					'maxlength' => '',
 				),
 				array (
-					'key' => 'pv_event_field_53765c96199b7',
+					'key' => 'field_53765c96199b7',
 					'label' => 'Sponsor Logo',
 					'name' => 'pv_event_topic_sponsor_logo',
 					'type' => 'image',
@@ -941,7 +950,7 @@ class PV_Events {
 					'library' => 'all',
 				),
 				array (
-					'key' => 'pv_event_field_53765d0e199b8',
+					'key' => 'field_53765d0e199b8',
 					'label' => 'Sponsor Website',
 					'name' => 'pv_event_topic_sponsor_url',
 					'type' => 'text',
@@ -953,7 +962,7 @@ class PV_Events {
 					'maxlength' => '',
 				),
 				array (
-					'key' => 'pv_event_field_53765d26199b9',
+					'key' => 'field_53765d26199b9',
 					'label' => 'Sponsor Description',
 					'name' => 'pv_event_topic_sponsor_desc',
 					'type' => 'wysiwyg',
@@ -986,7 +995,7 @@ class PV_Events {
 			'title' => 'Associated Resources',
 			'fields' => array (
 				array (
-					'key' => 'pv_event_field_537639d19a4aa',
+					'key' => 'field_537639d19a4aa',
 					'label' => 'Resources',
 					'name' => 'pv_event_presentation_resources',
 					'type' => 'relationship',
@@ -1039,7 +1048,7 @@ class PV_Events {
 			'title' => 'Video Controls Settings',
 			'fields' => array (
 				array (
-					'key' => 'pv_event_field_537a71d67ca68',
+					'key' => 'field_537a71d67ca68',
 					'label' => 'Height',
 					'name' => 'pv_event_vid_controls_height',
 					'type' => 'number',
@@ -1052,7 +1061,7 @@ class PV_Events {
 					'step' => 1,
 				),
 				array (
-					'key' => 'pv_event_field_537a71f87ca69',
+					'key' => 'field_537a71f87ca69',
 					'label' => 'Width',
 					'name' => 'pv_event_vid_controls_width',
 					'type' => 'number',
