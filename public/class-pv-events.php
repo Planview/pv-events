@@ -696,7 +696,7 @@ class PV_Events {
 				),
 				array (
 					'key' => 'field_537633709a4a7',
-					'label' => 'Abstract',
+					'label' => 'Abstract (PL) or Sidebar Content (Launch)',
 					'name' => 'pv_event_presentation_abstract',
 					'type' => 'wysiwyg',
 					'default_value' => '',
