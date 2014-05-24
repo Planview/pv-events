@@ -291,6 +291,7 @@ class PV_Events {
 	public function action_init() {
 		$this->post_types();
 		$this->taxonomies();
+		$this->options_pages();
 		$this->custom_fields();
 	}
 
@@ -641,7 +642,7 @@ class PV_Events {
 					'field_type' => 'select',
 					'allow_null' => 0,
 					'load_save_terms' => 1,
-					'return_format' => 'id',
+					'return_format' => 'object',
 					'multiple' => 0,
 				),
 				array (
@@ -654,7 +655,7 @@ class PV_Events {
 					'field_type' => 'select',
 					'allow_null' => 0,
 					'load_save_terms' => 1,
-					'return_format' => 'id',
+					'return_format' => 'object',
 					'multiple' => 0,
 				),
 			),
@@ -1102,6 +1103,117 @@ class PV_Events {
 			),
 			'menu_order' => 0,
 		));
-	}
 
+		register_field_group(array (
+			'id' => 'pv_event_resource-library-archive-settings',
+			'title' => 'Resource Library Archive Settings',
+			'fields' => array (
+				array (
+					'key' => 'field_5380e29023d17',
+					'label' => 'Page Title',
+					'name' => 'pv_event_resources_archive_title',
+					'type' => 'text',
+					'default_value' => '',
+					'placeholder' => '',
+					'prepend' => '',
+					'append' => '',
+					'formatting' => 'html',
+					'maxlength' => '',
+				),
+				array (
+					'key' => 'field_5380e2a723d18',
+					'label' => 'Intro Content',
+					'name' => 'pv_event_resources_archive_intro',
+					'type' => 'wysiwyg',
+					'default_value' => '',
+					'toolbar' => 'full',
+					'media_upload' => 'yes',
+				),
+			),
+			'location' => array (
+				array (
+					array (
+						'param' => 'options_page',
+						'operator' => '==',
+						'value' => 'pv-event-resources-options',
+						'order_no' => 0,
+						'group_no' => 0,
+					),
+				),
+			),
+			'options' => array (
+				'position' => 'normal',
+				'layout' => 'no_box',
+				'hide_on_screen' => array (
+				),
+			),
+			'menu_order' => 0,
+		));
+
+		register_field_group(array (
+			'id' => 'pv_event_topic-area-archive-settings',
+			'title' => 'Topic Area Archive Settings',
+			'fields' => array (
+				array (
+					'key' => 'field_53812abb031cc',
+					'label' => 'Page Title',
+					'name' => 'pv_event_topics_archive_title',
+					'type' => 'text',
+					'default_value' => '',
+					'placeholder' => '',
+					'prepend' => '',
+					'append' => '',
+					'formatting' => 'html',
+					'maxlength' => '',
+				),
+				array (
+					'key' => 'field_53812ab7d48a8',
+					'label' => 'Intro Content',
+					'name' => 'pv_event_topics_archive_intro',
+					'type' => 'wysiwyg',
+					'default_value' => '',
+					'toolbar' => 'full',
+					'media_upload' => 'yes',
+				),
+			),
+			'location' => array (
+				array (
+					array (
+						'param' => 'options_page',
+						'operator' => '==',
+						'value' => 'pv-event-topics-options',
+						'order_no' => 0,
+						'group_no' => 0,
+					),
+				),
+			),
+			'options' => array (
+				'position' => 'normal',
+				'layout' => 'no_box',
+				'hide_on_screen' => array (
+				),
+			),
+			'menu_order' => 0,
+		));
+	}
+	private function options_pages() {
+		if ( ! function_exists('acf_add_options_sub_page') )
+			return;
+
+		acf_add_options_sub_page(array(
+	        'title' => _x('Resource Library Options', 'Option page title', 'pv-events'),
+	        'menu' => _x('Options', 'Option page title', 'pv-events'),
+	        'parent' => 'edit.php?post_type=library',
+	        'slug' => 'pv-event-resources-options',
+	        'capability' => 'edit_theme_options'
+	    ));
+
+		acf_add_options_sub_page(array(
+	        'title' => _x('Topics Options', 'Option page title', 'pv-events'),
+	        'menu' => _x('Options', 'Option page title', 'pv-events'),
+	        'parent' => 'edit.php?post_type=topics',
+	        'slug' => 'pv-event-topics-options',
+	        'capability' => 'edit_theme_options'
+	    ));
+	}
 }
