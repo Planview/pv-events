@@ -404,7 +404,7 @@ class PV_Events {
 			'capability_type'     => 'post',
 			'supports'            => array(
 				'title', 'editor', 'thumbnail',
-				'excerpt','revisions'
+				'excerpt', 'revisions', 'page-attributes'
 			)
 		);
 	
