@@ -924,6 +924,23 @@ class PV_Events {
 					'maxlength' => '',
 				),
 				array (
+					'key' => 'field_53a066248d60a',
+					'label' => 'FAQ Content',
+					'name' => 'pv_event_topic_faq',
+					'type' => 'wysiwyg',
+					'default_value' => '',
+					'toolbar' => 'full',
+					'media_upload' => 'yes',
+				),
+				array (
+					'key' => 'field_53a0667389042',
+					'label' => 'Q&A Form',
+					'name' => 'pv_event_topic_qa_form',
+					'type' => 'gravity_forms_field',
+					'allow_null' => 1,
+					'multiple' => 0,
+				),
+				array (
 					'key' => 'field_53765d5a199ba',
 					'label' => 'Sponsor Info',
 					'name' => '',
