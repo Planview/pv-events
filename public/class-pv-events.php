@@ -387,7 +387,7 @@ class PV_Events {
 			'labels'              => $topic_labels,
 			'hierarchical'        => false,
 			'description'         => 'Event topic areas',
-			'taxonomies'          => array(),
+			'taxonomies'          => array( 'product' ),
 			'public'              => true,
 			'show_ui'             => true,
 			'show_in_menu'        => true,
@@ -400,12 +400,15 @@ class PV_Events {
 			'has_archive'         => true,
 			'query_var'           => true,
 			'can_export'          => true,
-			'rewrite'             => true,
+			'rewrite'             => array(
+                'slug' => 'pv',
+                'with_front' => false
+            ),
 			'capability_type'     => 'post',
 			'supports'            => array(
 				'title', 'editor', 'thumbnail',
 				'excerpt', 'revisions', 'page-attributes'
-			)
+			),
 		);
 	
 		register_post_type( 'topics', $topic_args );
@@ -458,7 +461,39 @@ class PV_Events {
 	/**
 	 * Register the custom taxonomies used for the plugin
 	 */
-	private function taxonomies() {
+	private function taxonomies() {	
+
+		$product_labels = array(
+			'name'					=> _x( 'Products', 'Product plural name', 'pv-events' ),
+			'singular_name'			=> _x( 'Product', 'Product singular name', 'pv-events' ),
+			'search_items'			=> __( 'Search Products', 'pv-events' ),
+			'popular_items'			=> __( 'Popular Products', 'pv-events' ),
+			'all_items'				=> __( 'All Products', 'pv-events' ),
+			'parent_item'			=> __( 'Parent Product', 'pv-events' ),
+			'parent_item_colon'		=> __( 'Parent Product:', 'pv-events' ),
+			'edit_item'				=> __( 'Edit Product', 'pv-events' ),
+			'update_item'			=> __( 'Update Product', 'pv-events' ),
+			'add_new_item'			=> __( 'Add New Product', 'pv-events' ),
+			'new_item_name'			=> __( 'New Product Name', 'pv-events' ),
+			'add_or_remove_items'	=> __( 'Add or remove Product', 'pv-events' ),
+			'choose_from_most_used'	=> __( 'Choose from most used products', 'pv-events' ),
+			'menu_name'				=> __( 'Products', 'pv-events' ),
+		);
+	
+		$product_args = array(
+			'labels'            => $product_labels,
+			'public'            => true,
+			'show_in_nav_menus' => true,
+			'show_admin_column' => true,
+			'hierarchical'      => true,
+			'show_tagcloud'     => true,
+			'show_ui'           => true,
+			'query_var'         => true,
+			'rewrite'           => true,
+			'query_var'         => true,
+		);
+	
+		register_taxonomy( 'product', array( 'topics' ), $product_args );	
 		
 		$type_labels = array(
 			'name'					=> _x( 'Resource Types', 'Taxonomy plural name', 'pv-events' ),
@@ -658,6 +693,14 @@ class PV_Events {
 					'return_format' => 'object',
 					'multiple' => 0,
 				),
+				array (
+					'key' => 'field_547f7a1cf4cf4',
+					'label' => 'Featured',
+					'name' => 'pv_event_resource_featured',
+					'type' => 'true_false',
+					'message' => '',
+					'default_value' => 0,
+				),
 			),
 			'location' => array (
 				array (
@@ -732,9 +775,9 @@ class PV_Events {
 				),
 				array (
 					'key' => 'field_537e4c5e6c26e',
-					'label' => 'Q&A Form',
+					'label' => 'Q&A Form Shortcode',
 					'name' => 'pv_event_presentation_qa_form',
-					'type' => 'gravity_forms_field',
+					'type' => 'text',
 					'allow_null' => 1,
 					'multiple' => 0,
 				),
@@ -901,6 +944,19 @@ class PV_Events {
 					'type' => 'tab',
 				),
 				array (
+					'key' => 'field_558067f89332f',
+					'label' => 'Products',
+					'name' => 'pv_event_topic_product',
+					'type' => 'taxonomy',
+					'required' => 1,
+					'taxonomy' => 'product',
+					'field_type' => 'select',
+					'allow_null' => 0,
+					'load_save_terms' => 1,
+					'return_format' => 'object',
+					'multiple' => 0,
+				),
+				array (
 					'key' => 'field_53765c29199b4',
 					'label' => 'Video Playlist Code',
 					'name' => 'pv_event_topic_playlist',
@@ -936,7 +992,7 @@ class PV_Events {
 					'key' => 'field_53a0667389042',
 					'label' => 'Q&A Form',
 					'name' => 'pv_event_topic_qa_form',
-					'type' => 'gravity_forms_field',
+					'type' => 'text',
 					'allow_null' => 1,
 					'multiple' => 0,
 				),
@@ -1004,6 +1060,7 @@ class PV_Events {
 				'position' => 'acf_after_title',
 				'layout' => 'default',
 				'hide_on_screen' => array (
+				    0 => 'product',
 				),
 			),
 			'menu_order' => 0,
